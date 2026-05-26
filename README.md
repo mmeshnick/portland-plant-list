@@ -3,6 +3,6 @@ A simple web app to easily search the Portland Plant List. See if the plant in q
 
 The Backyard Habitat Certification Program specifically looks for plants on this list (and NOT cultivars).
 
-###Resources:
+### Resources:
 - [Backyard Habitat Certification Program](https://backyardhabitats.org/) 
 - The full [Portland Plant List](https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf)
