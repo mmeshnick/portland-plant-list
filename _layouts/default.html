@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ page.title | default: site.title }}</title>
+<meta name="description" content="{{ page.description | default: site.description }}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow"></div>
+    <h1>Portland <em>Plant List</em></h1>
+    <p>Search native and nuisance plants for the City of Portland. Data sourced from the official <a href="https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf" style="color: #f5dada;">Portland Plant List</a> (2016). A tool for all gardeners, and especially those participating in the <a href="https://backyardhabitats.org/" style="color: #f5dada;">Backyard Habitat Certification Program.</a></p>
+    <br><p>Note that <a href="https://choosenatives.org/articles/cultivars-problematic/" style="color: #f5dada;">cultivars</a>, denoted at nurseries with an additional name in "quotations" after the latin name, are not considered a PPL native unless on the list.</p>
+    <div class="header-pills">
+      <span class="header-pill">188 native plants</span>
+      <span class="header-pill">72 nuisance plants</span>
+      <span class="header-pill">Search by common or Latin name</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  {{ content }}
+</main>
+
+<footer>
+  Data from the <a href="https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf#page=67" target="_blank">Portland Plant List (2016)</a> and <a href="https://backyardhabitats.org/wp-content/uploads/2021/01/Condensed-Portland-Plant-List-Plants-by-Condition.pdf" target="_blank">Condensed Plant List by Condition</a> · City of Portland Bureau of Planning &amp; Sustainability
+</footer>
+
+<script src="{{ '/assets/js/app.js' | relative_url }}"></script>
+</body>
+</html>

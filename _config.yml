@@ -1,2 +1,10 @@
-title: PPL Search
-description: Search the Portland Plant List
+title: Portland Plant List
+description: Search native and nuisance plants for the City of Portland.
+url: "https://portlandplants.info"
+baseurl: ""
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md

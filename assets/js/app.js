@@ -1,392 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Portland Plant List</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --green-dark: #1a2e1a;
-    --green-mid:  #2d4a2d;
-    --green-soft: #3d6b3d;
-    --green-pale: #c8dbc0;
-    --green-mist: #eaf2e6;
-    --cream:      #f5f0e8;
-    --cream-dark: #ede6d8;
-    --red-dark:   #5c1a1a;
-    --red-mid:    #8b3a3a;
-    --red-pale:   #f5dada;
-    --amber-dark: #5c3d0a;
-    --amber-pale: #fdf0d5;
-    --ink:        #1a1f1a;
-    --ink-muted:  #4a5245;
-    --ink-faint:  #8a9688;
-    --border:     rgba(45,74,45,0.15);
-    --border-mid: rgba(45,74,45,0.25);
-    --radius-sm:  6px;
-    --radius-md:  10px;
-    --radius-lg:  16px;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  /* ── HEADER ─────────────────────────────────────────────── */
-  header {
-    background: var(--green-dark);
-    color: var(--cream);
-    padding: 2.5rem 2rem 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 80% 50%, rgba(61,107,61,0.4) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header-inner { max-width: 760px; margin: 0 auto; position: relative; }
-  .header-eyebrow {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--green-pale);
-    margin-bottom: 0.5rem;
-  }
-  header h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 300;
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.1;
-    color: var(--cream);
-    margin-bottom: 0.75rem;
-  }
-  header h1 em { font-style: italic; color: var(--green-pale); }
-  header p {
-    font-size: 13.5px;
-    color: var(--green-pale);
-    max-width: 480px;
-    line-height: 1.6;
-  }
-  .header-pills {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 1.25rem;
-  }
-  .header-pill {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 99px;
-    border: 1px solid rgba(200,219,192,0.3);
-    color: var(--green-pale);
-  }
-
-  /* ── LAYOUT ─────────────────────────────────────────────── */
-  main { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-  /* ── TABS ───────────────────────────────────────────────── */
-  .tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 1.5px solid var(--border-mid);
-    margin-bottom: 1.5rem;
-  }
-  .tab {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    font-weight: 400;
-    color: var(--ink-faint);
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    border-bottom: 2.5px solid transparent;
-    margin-bottom: -1.5px;
-    transition: color 0.15s, border-color 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-  .tab svg { width: 15px; height: 15px; }
-  .tab:hover { color: var(--ink); }
-  .tab.active { color: var(--green-dark); font-weight: 500; border-bottom-color: var(--green-dark); }
-
-  /* ── SEARCH ─────────────────────────────────────────────── */
-  .search-wrap { position: relative; margin-bottom: 1rem; }
-  .search-wrap svg {
-    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-    width: 17px; height: 17px; color: var(--ink-faint); pointer-events: none;
-  }
-  .search-input {
-    width: 100%;
-    padding: 11px 14px 11px 42px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14.5px;
-    border: 1.5px solid var(--border-mid);
-    border-radius: var(--radius-md);
-    background: white;
-    color: var(--ink);
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .search-input:focus {
-    outline: none;
-    border-color: var(--green-soft);
-    box-shadow: 0 0 0 3px rgba(61,107,61,0.12);
-  }
-  .search-input::placeholder { color: var(--ink-faint); }
-
-  /* ── FILTERS ─────────────────────────────────────────────── */
-  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .filter-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    padding: 5px 13px;
-    border-radius: 99px;
-    border: 1px solid var(--border-mid);
-    background: white;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .filter-btn:hover { border-color: var(--green-soft); color: var(--ink); }
-  .filter-btn.active {
-    background: var(--green-dark);
-    color: var(--cream);
-    border-color: var(--green-dark);
-    font-weight: 500;
-  }
-
-  /* ── RESULTS META ────────────────────────────────────────── */
-  .results-meta {
-    font-size: 12.5px;
-    color: var(--ink-faint);
-    margin-bottom: 0.875rem;
-    font-style: italic;
-  }
-
-  /* ── PLANT CARDS ─────────────────────────────────────────── */
-  .plant-card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .plant-card:hover { border-color: var(--border-mid); box-shadow: 0 2px 8px rgba(45,74,45,0.07); }
-  .plant-card.expanded { border-color: var(--green-soft); box-shadow: 0 2px 12px rgba(45,74,45,0.1); }
-
-  .card-header { display: flex; align-items: flex-start; gap: 10px; }
-  .card-names { flex: 1; min-width: 0; }
-  .common-name { font-size: 15px; font-weight: 500; color: var(--ink); }
-  .latin-name { font-size: 13px; color: var(--ink-faint); font-style: italic; margin-top: 2px; }
-  .card-right { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-
-  .chevron {
-    width: 16px; height: 16px;
-    color: var(--ink-faint);
-    transition: transform 0.2s;
-    flex-shrink: 0;
-  }
-  .plant-card.expanded .chevron { transform: rotate(180deg); }
-
-  /* ── BADGES ──────────────────────────────────────────────── */
-  .badge {
-    font-size: 11px; font-weight: 500;
-    padding: 3px 9px; border-radius: 99px;
-    white-space: nowrap;
-  }
-  .badge-type { background: #e8f0f8; color: #1a3a5c; }
-  .badge-sun  { background: #fdf0d5; color: var(--amber-dark); }
-  .badge-part { background: #f0eefa; color: #3a2a6e; }
-  .badge-shade { background: var(--green-mist); color: var(--green-mid); }
-
-  .rank-badge {
-    font-size: 12px; font-weight: 700;
-    padding: 3px 10px; border-radius: 99px;
-    white-space: nowrap;
-  }
-  .rank-W { background: #ede8fa; color: #3a2a6e; }
-  .rank-E { background: var(--red-pale); color: var(--red-dark); border: 1.5px solid #d9a0a0; font-size: 11px; }
-  .rank-A { background: #fdecea; color: #7a1515; }
-  .rank-B { background: #fde8e0; color: #6b2e15; }
-  .rank-C { background: var(--amber-pale); color: var(--amber-dark); }
-  .rank-D { background: #e8f0f8; color: #1a3a5c; }
-
-  /* ── CARD DETAILS ────────────────────────────────────────── */
-  .card-details {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    font-size: 13px;
-  }
-  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 10px; }
-  .detail-label { font-size: 11.5px; color: var(--ink-faint); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
-  .detail-value { color: var(--ink); font-weight: 500; font-size: 13.5px; }
-  .sun-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
-
-  .rank-explainer {
-    margin-top: 10px;
-    padding: 10px 14px;
-    border-radius: var(--radius-md);
-    background: var(--green-mist);
-    border-left: 3px solid var(--green-soft);
-  }
-  .rank-explainer.rank-E { background: #fdecea; border-left-color: var(--red-mid); }
-  .rank-explainer.rank-A { background: #fdecea; border-left-color: var(--red-mid); }
-  .rank-explainer.rank-B { background: #fde8e0; border-left-color: #b55030; }
-  .rank-explainer.rank-C { background: var(--amber-pale); border-left-color: #b07820; }
-  .rank-explainer.rank-D { background: #e8f0f8; border-left-color: #185fa5; }
-  .rank-explainer.rank-W { background: #ede8fa; border-left-color: #6050a8; }
-  .rank-explainer-title { font-weight: 500; font-size: 12.5px; margin-bottom: 3px; color: var(--ink); }
-  .rank-explainer-desc { font-size: 12.5px; color: var(--ink-muted); line-height: 1.55; }
-  .note-text { margin-bottom: 8px; color: var(--ink-muted); line-height: 1.55; }
-  .pdf-link { margin-top: 10px; font-size: 12px; color: var(--ink-faint); }
-  .pdf-link a { color: var(--green-soft); text-decoration: underline; }
-
-  /* ── RANK LEGEND ─────────────────────────────────────────── */
-  .rank-legend {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 1.25rem;
-  }
-  .rank-legend-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: var(--radius-md);
-    background: white;
-    border: 1px solid var(--border);
-  }
-  .rank-legend-text { font-size: 12px; color: var(--ink-muted); line-height: 1.45; }
-  .rank-legend-text strong { color: var(--ink); display: block; margin-bottom: 2px; font-weight: 500; }
-
-  /* ── NO RESULTS ──────────────────────────────────────────── */
-  .no-results { text-align: center; padding: 3rem 1rem; color: var(--ink-faint); }
-  .no-results svg { width: 36px; height: 36px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
-
-  /* ── FOOTER ──────────────────────────────────────────────── */
-  footer {
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 12px;
-    color: var(--ink-faint);
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
-  }
-  footer a { color: var(--green-soft); }
-
-  @media (max-width: 520px) {
-    header { padding: 1.75rem 1.25rem 1.5rem; }
-    main { padding: 1.25rem 1rem 3rem; }
-    .rank-legend { grid-template-columns: 1fr; }
-    .detail-grid { grid-template-columns: 1fr; }
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="header-inner">
-    <div class="header-eyebrow"></div>
-    <h1>Portland <em>Plant List</em></h1>
-    <p>Search native and nuisance plants for the City of Portland. Data sourced from the official <a href="https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf" style="color: #f5dada;">Portland Plant List</a> (2016). A tool for all gardeners, and especially those participating in the <a href="https://backyardhabitats.org/" style="color: #f5dada;">Backyard Habitat Certification Program.</a></p>
-    <br><p>Note that <a href="https://choosenatives.org/articles/cultivars-problematic/" style="color: #f5dada;">cultivars</a>, denoted at nurseries with an additional name in "quotations" after the latin name, are not considered a PPL native unless on the list.</p>
-    <div class="header-pills">
-      <span class="header-pill">188 native plants</span>
-      <span class="header-pill">72 nuisance plants</span>
-      <span class="header-pill">Search by common or Latin name</span>
-    </div>
-  </div>
-</header>
-
-<main>
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('native',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22V12m0 0C12 7 7 4 3 5c0 5 4 8 9 7m0 0c0-5 5-8 9-7-1 5-5 8-9 7"/></svg>
-      Native plants (188)
-    </button>
-    <button class="tab" onclick="switchTab('nuisance',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      Nuisance plants (72)
-    </button>
-  </div>
-
-  <!-- NATIVE PANEL -->
-  <div id="native-panel">
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" type="text" id="nativeSearch" placeholder="Search by common or Latin name…" autocomplete="off" oninput="renderNative()" />
-    </div>
-    <div class="filters" id="nativeFilters">
-      <button class="filter-btn active" data-filter="all">All conditions</button>
-      <button class="filter-btn" data-filter="Full Sun">☀ Full sun</button>
-      <button class="filter-btn" data-filter="Part Shade">◑ Part shade</button>
-      <button class="filter-btn" data-filter="Full Shade">◗ Full shade</button>
-      <button class="filter-btn" data-type="Large Tree">Large tree</button>
-      <button class="filter-btn" data-type="Small Tree">Small tree</button>
-      <button class="filter-btn" data-type="Large Shrub">Large shrub</button>
-      <button class="filter-btn" data-type="Small/Medium Shrub">Shrub</button>
-      <button class="filter-btn" data-type="Fern">Fern</button>
-      <button class="filter-btn" data-type="Ground Cover">Ground cover</button>
-    </div>
-    <div class="results-meta" id="nativeMeta"></div>
-    <div id="nativeResults"></div>
-  </div>
-
-  <!-- NUISANCE PANEL -->
-  <div id="nuisance-panel" style="display:none">
-    <div class="rank-legend">
-      <div class="rank-legend-item"><span class="rank-badge rank-A" style="flex-shrink:0">A</span><div class="rank-legend-text"><strong>Rank A</strong>Invasive; occurs in region but not yet widely distributed. Limited to a few sites; spreads rapidly.</div></div>
-      <div class="rank-legend-item"><span class="rank-badge rank-B" style="flex-shrink:0">B</span><div class="rank-legend-text"><strong>Rank B</strong>Invasive; more abundant than A but still limited to patches or specific habitats. Spreads rapidly.</div></div>
-      <div class="rank-legend-item"><span class="rank-badge rank-C" style="flex-shrink:0">C</span><div class="rank-legend-text"><strong>Rank C</strong>Invasive; widely distributed and abundant throughout the region — considered ubiquitous.</div></div>
-      <div class="rank-legend-item"><span class="rank-badge rank-D" style="flex-shrink:0">D</span><div class="rank-legend-text"><strong>Rank D</strong>Less aggressive than A–C. Persists alongside native species with less impact on the ecosystem.</div></div>
-      <div class="rank-legend-item"><span class="rank-badge rank-W" style="flex-shrink:0">W</span><div class="rank-legend-text"><strong>Rank W — Watch</strong>Monitor for presence and/or to determine level of invasiveness in the region.</div></div>
-      <div class="rank-legend-item" style="grid-column:1/-1; border-left: 3px solid #b55030; background: #fde8e0;"><span class="rank-badge rank-E" style="flex-shrink:0; white-space:nowrap">Req. Eradication</span><div class="rank-legend-text"><strong>Required Eradication List</strong>A separate subset of the Nuisance List. These plants must be removed from property per Portland City Code Title 29. Refusing to manage them can result in penalties.</div></div>
-    </div>
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" type="text" id="nuisanceSearch" placeholder="Search nuisance plants…" autocomplete="off" oninput="renderNuisance()" />
-    </div>
-    <div class="filters" id="nuisanceFilters">
-      <button class="filter-btn active" data-rank="all">All ranks</button>
-      <button class="filter-btn" data-rank="A">Rank A</button>
-      <button class="filter-btn" data-rank="B">Rank B</button>
-      <button class="filter-btn" data-rank="C">Rank C</button>
-      <button class="filter-btn" data-rank="D">Rank D</button>
-      <button class="filter-btn" data-rank="W">Rank W — Watch</button>
-      <button class="filter-btn" data-rank="E">Req. Eradication</button>
-    </div>
-    <div class="results-meta" id="nuisanceMeta"></div>
-    <div id="nuisanceResults"></div>
-  </div>
-</main>
-
-<footer>
-  Data from the <a href="https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf#page=67" target="_blank">Portland Plant List (2016)</a> and <a href="https://backyardhabitats.org/wp-content/uploads/2021/01/Condensed-Portland-Plant-List-Plants-by-Condition.pdf" target="_blank">Condensed Plant List by Condition</a> · City of Portland Bureau of Planning &amp; Sustainability
-</footer>
-
-<script>
 // ── DATA ───────────────────────────────────────────────────────────────────
 
 const NATIVE = [
@@ -642,12 +254,7 @@ let nuisanceRank = 'all';
 let nativeExp = null, nuisanceExp = null;
 
 const RANK_LABELS = {
-  A:'Rank A',
-  B:'Rank B',
-  C:'Rank C',
-  D:'Rank D',
-  W:'Rank W — Watch',
-  E:'Required Eradication List',
+  A:'Rank A', B:'Rank B', C:'Rank C', D:'Rank D', W:'Rank W — Watch', E:'Required Eradication List',
 };
 const RANK_DESC = {
   A:'Known to be invasive. Occurs in the region but is not yet widely distributed — limited to a few sites. Spreads rapidly and is difficult to control once widespread.',
@@ -659,11 +266,7 @@ const RANK_DESC = {
 };
 
 // ── PDF PAGE MAPPING ───────────────────────────────────────────────────────
-// PDF page numbers verified from table of contents and section markers.
-// Links use #page=N fragment, supported by most PDF viewers and browsers.
 const PDF_BASE = 'https://backyardhabitats.org/wp-content/uploads/2018/03/Portland-Plant-List.pdf';
-
-// Sedges, rushes, and grasses by latin name for ground cover sub-routing
 const SEDGE_RUSH_LATINS = new Set([
   'Carex densa','Carex deweyana','Carex obnupta','Carex stipata',
   'Juncus balticus','Juncus effusus','Juncus ensifolius','Juncus patens',
@@ -672,34 +275,26 @@ const SEDGE_RUSH_LATINS = new Set([
 const GRASS_LATINS = new Set([
   'Deschampsia caespitosa','Elymus glaucus','Hordeum brachyantherum','Koeleria macrantha',
 ]);
-// Ferns within the "Fern" type also appear in ground cover context — already typed as Fern
-
 function pdfPageForNative(p) {
-  // Returns {page, section} based on plant type and sub-type
-  const t = p.t;
-  if (t === 'Large Tree') {
-    // Evergreen large trees vs deciduous — split by common names
+  if (p.t === 'Large Tree') {
     const evergreens = new Set(['Grand Fir','Ponderosa Pine','Douglas-fir','Pacific Yew','Western Red Cedar','Western Hemlock']);
-    return evergreens.has(p.c)
-      ? {page: 67, section: 'Section 3.1 — Evergreen Trees'}
-      : {page: 71, section: 'Section 3.2 — Deciduous Trees'};
+    return evergreens.has(p.c) ? {page:67,section:'Section 3.1 — Evergreen Trees'} : {page:71,section:'Section 3.2 — Deciduous Trees'};
   }
-  if (t === 'Small Tree') return {page: 82, section: 'Section 3.6 — Arborescent Shrubs'};
-  if (t === 'Large Shrub') return {page: 87, section: 'Section 3.8 — Shrubs'};
-  if (t === 'Small/Medium Shrub') return {page: 87, section: 'Section 3.8 — Shrubs'};
-  if (t === 'Fern') return {page: 112, section: 'Section 3.13 — Herbaceous Ferns'};
-  if (t === 'Ground Cover') {
-    if (SEDGE_RUSH_LATINS.has(p.l)) return {page: 110, section: 'Section 3.12 — Sedges & Rushes'};
-    if (GRASS_LATINS.has(p.l)) return {page: 108, section: 'Section 3.11 — Herbaceous Grasses'};
-    return {page: 102, section: 'Section 3.10 — Herbaceous Forbs'};
+  if (p.t === 'Small Tree')           return {page:82,  section:'Section 3.6 — Arborescent Shrubs'};
+  if (p.t === 'Large Shrub')          return {page:87,  section:'Section 3.8 — Shrubs'};
+  if (p.t === 'Small/Medium Shrub')   return {page:87,  section:'Section 3.8 — Shrubs'};
+  if (p.t === 'Fern')                 return {page:112, section:'Section 3.13 — Herbaceous Ferns'};
+  if (p.t === 'Ground Cover') {
+    if (SEDGE_RUSH_LATINS.has(p.l))   return {page:110, section:'Section 3.12 — Sedges & Rushes'};
+    if (GRASS_LATINS.has(p.l))        return {page:108, section:'Section 3.11 — Herbaceous Grasses'};
+    return                                   {page:102, section:'Section 3.10 — Herbaceous Forbs'};
   }
-  return {page: 1, section: 'Portland Plant List'};
+  return {page:1, section:'Portland Plant List'};
 }
-
 function pdfPageForNuisance(p) {
   return p.r === 'E'
-    ? {page: 154, section: 'Section 4.2 — Required Eradication List'}
-    : {page: 149, section: 'Section 4.1 — Nuisance Plants List'};
+    ? {page:174, section:'Section 4 — Required Eradication List'}
+    : {page:164, section:'Section 4 — Nuisance Plants List'};
 }
 
 // ── HELPERS ────────────────────────────────────────────────────────────────
@@ -714,11 +309,22 @@ function score(c,l,q) {
   return hits ? 20+hits*10 : 0;
 }
 function sunBadge(s) {
-  if (s==='Full Sun') return `<span class="badge badge-sun">☀ Full sun</span>`;
+  if (s==='Full Sun')   return `<span class="badge badge-sun">☀ Full sun</span>`;
   if (s==='Part Shade') return `<span class="badge badge-part">◑ Part shade</span>`;
-  return `<span class="badge badge-shade">◗ Full shade</span>`;
+  return                       `<span class="badge badge-shade">◗ Full shade</span>`;
 }
 function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── SCROLL TO SEARCH ON FOCUS ──────────────────────────────────────────────
+function scrollToSearch(inputId) {
+  // Small delay lets iOS finish its own scroll-to-cursor behaviour first
+  setTimeout(() => {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 12;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, 80);
+}
 
 // ── RENDER NATIVE ──────────────────────────────────────────────────────────
 function renderNative() {
@@ -816,7 +422,7 @@ function switchTab(tab, btn) {
   activeTab = tab;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('native-panel').style.display = tab==='native' ? '' : 'none';
+  document.getElementById('native-panel').style.display   = tab==='native'   ? '' : 'none';
   document.getElementById('nuisance-panel').style.display = tab==='nuisance' ? '' : 'none';
 }
 
@@ -847,9 +453,11 @@ document.querySelectorAll('#nuisanceFilters .filter-btn').forEach(btn => {
   });
 });
 
+// ── FOCUS: scroll search bar to top of viewport ────────────────────────────
+document.getElementById('nativeSearch').addEventListener('focus',   () => scrollToSearch('nativeSearch'));
+document.getElementById('nuisanceSearch').addEventListener('focus', () => scrollToSearch('nuisanceSearch'));
+
 // ── INIT ───────────────────────────────────────────────────────────────────
 renderNative();
 renderNuisance();
-</script>
-</body>
-</html>
+
